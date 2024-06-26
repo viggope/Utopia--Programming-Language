@@ -29,21 +29,23 @@ def giveError(error, *extra):
         print("X")
 
 
-def assignVar(name: str, value, type: str, assignedAtLine: int):
-    storage[name] = {"value": value, "type": type, "line": assignedAtLine}
+def assignVar(name: str, value, Type: str, assignedAtLine: int):
+    storage[name] = {"value": value, "type": Type, "line": assignedAtLine}
 
 
 def getVars(string: str, prefix: str = "@"):
     newString = ""
     varName = ""
     now = False
+    if type(string) == bool:
+        return string
     for i in string:
         if i == prefix:
             now = True
-        elif i == " " or i == "," or i == "\"" or i == ".":
+        elif i == " " or i == "," or i == "\"":
             if varName in storage.keys():
                 if storage[varName]["type"] == "bool":
-                    newString += str(storage[varName]["value"]).lower()
+                    newString += str(storage[varName]["value"])
                 else:
                     newString += storage[varName]["value"]
             elif now:
@@ -57,7 +59,7 @@ def getVars(string: str, prefix: str = "@"):
             newString += i
     if varName in storage.keys():
         if storage[varName]["type"] == "bool":
-            newString += str(storage[varName]["value"]).lower()
+            newString += str(storage[varName]["value"])
         else:
             newString += storage[varName]["value"]
     elif now:
